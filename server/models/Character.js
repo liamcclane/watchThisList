@@ -11,6 +11,13 @@ const CharacterSchema = new mongoose.Schema(
         },
         imgLink:{
             type: String
+        },
+        likeCount:{
+            type:Number
+        },
+        _movie : {
+            type : mongoose.Types.ObjectId,
+            ref : "Movie2"
         }
     },
     {
