@@ -24,7 +24,7 @@ const Movie2Schema = new mongoose.Schema(
         }],
         _characters:[{
             type: mongoose.Types.ObjectId,
-            ref: "Character"
+            ref: "CharacterAgain"
         }],
         _posts : [{
             type: mongoose.Types.ObjectId,

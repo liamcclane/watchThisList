@@ -1,8 +1,6 @@
 let mongoose = require('mongoose');
-let Movie2 = mongoose.model('Movie2');
 let Post = mongoose.model('Post');
 let Comment = mongoose.model('Comment');
-let Character = mongoose.model('Character');
 
 module.exports = {
     index: (req, res) => {

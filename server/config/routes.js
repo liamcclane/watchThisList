@@ -1,55 +1,62 @@
-let users = require('../controllers/users'),
-    movies = require('../controllers/movies'),
-    link = require('./../controllers/link'),
-    character = require('./../controllers/character'),
-
-    movie2 = require('./../controllers/controllers2.0/movie2.0'),
+let movie2 = require('./../controllers/controllers2.0/movie2.0'),
     comment = require('./../controllers/controllers2.0/comment'),
     post = require('./../controllers/controllers2.0/post'),
     character2 = require('./../controllers/controllers2.0/character');
 
-// let path = require('path');
-
 module.exports = app => {
+    //-----------------routes about movies--------------------------
+    // index of all the movies in the DB
+    app.get('/api/movie2.0/', movie2.index); // find all // ***works***
+    // route to CREATE a movie
+    app.post('/api/movie2.0/', movie2.create); // create // ***works***
+    // route to SHOW Single movie 
+    app.get('/api/movie2.0/:movieId/', movie2.show); // show one // ***works***
+    // route to edit a Single movie 
+    app.put('/api/movie2.0/:movieId/', movie2.update); // update // ***works***
+    // route to delete Single movie
+    app.delete('/api/movie2.0/:movieId/', movie2.delete); // delete // 
 
-    app.get('/api/users', users.index);
-    app.post('/api/users/new', users.add);
-    app.get('/api/users/:id', users.show);
-    app.delete('/api/users/:id', users.delete);
-    app.put('/api/users/:id', users.update);
+    //-------------routes about posts----------------------------
+    // posts are not connects to movies, But movies are connected to posts
+    // LIST of all the posts in the DB
+    app.get('/api/post/', post.index);
+    // LIST of Posts, from a Single movie Id
+    app.get('/api/post/:movieId/', post.filterByMovie); // 
+    // CREATE a Post
+    app.post('/api/post/:movieId/', post.create); // 
+    // a Single Post
+    // there are can access the comments by the attribute _comments: [{CommentObj},{CommentObj}]
+    app.get('/api/post/:movieId/:postId/', post.show); //
+    // DELETES a Post
+    app.delete('/api/post/:movieId/:postId/', post.delete);
+    // Update
+    app.put('/api/post/:movieId/:postId/', post.update); 
+    // // routes that changes the DB for up and down votes 
+    // app.get('/api/post/up/:postId/', post.upVote);
+    // app.get('/api/post/down/:postId/', post.downVote); //
 
-    app.get('/api/movies', movies.index);
-    app.post('/api/users/:userId/new/movies', movies.add);
-    app.get('/api/users/:userId/:movieId', movies.show);
-    app.put('/api/users/:userId/:movieId/edit', movies.update);
-    app.delete('/api/users/:userId/:movieId', movies.delete);
+    //---------------routes about comments--------------------------------------
+    // LIST of all the comments in the DB 
+    app.get('/api/comment/', comment.index); // ***works*** 
+    // route that CREATES a comment
+    app.post('/api/comment/:postId/', comment.create); // ***works***
+    // route that DELETES a comment
+    app.delete('/api/comment/:commentId/', comment.delete); // ***works***
 
-    app.post('/api/users/:userId/:movieId/new/link', link.add);
-    app.post('/api/users/:userId/:movieId/new/character', character.add);
+    //---------------routes about characters--------------------------------------
+    // LIST of all the Characters in the DB
+    app.get('/api/character/', character2.index);  // ***works***
+    // LIST of Characters 
+    app.get('/api/character/:movieId/', character2.filterByMovie); // ***works*** 
+    // CREATES Characters
+    app.post('/api/character/:movieId/', character2.create); // ***works***
+    // a Single Character 
+    app.get('/api/character/:movieId/:characterId/', character2.show); // ***works*** 
+    // DELETES Characters
+    app.delete('/api/character/:characterId/', character2.delete); // ***works*** 
 
-
-
-
-
-    app.get('/api/movie2.0', movie2.index); // find all ***works***
-    app.post('/api/movie2.0', movie2.create); // create ***works***
-    app.get('/api/movie2.0/:movieId', movie2.show); // show one ***works***
-    app.put('/api/movie2.0/:movieId', movie2.update); // update ****works****
-    app.delete('/api/movie2.0/:movieId', movie2.delete); // delete ***works***
-
-    app.post('/api/movie2.0/:movieId', post.create); // 
-    app.get('/api/movie2.0/:movieId/posts', post.filterByMovie); // 
-    app.post('/api/movie2.0/:movieId/:postId', comment.create); //
-    app.post('/api/movie2.0/:movieId/createCharacter', character2.create); //
-    
-    app.delete('/api/movie2.0/:movieId/:characterId', character2.delete); //
-    app.delete('/api/movie2.0/:movieId/:postId',post.delete); // ****works****
-    app.delete('/api/movie2.0/:movieId/:commentId',comment.delete); //
-    
-    
-    app.get('/api/posts', post.index); // *** works**
-    app.get('/api/comments', comment.index); // *** works**
-    
-    app.get('/api/movie2.0/:movieId/:postId/up',post.upVote); // ****works****
-    app.get('/api/movie2.0/:movieId/:postId/down',post.downVote); //
+    //---------------routes about comments--------------------------------------
+    app.all('*', (req, res) => {
+        return res.json("no route for this");
+    })
 }

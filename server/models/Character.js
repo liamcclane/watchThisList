@@ -25,4 +25,4 @@ const CharacterSchema = new mongoose.Schema(
     }
 )
 
-mongoose.model('Character', CharacterSchema);
+mongoose.model('Character2', CharacterSchema);
