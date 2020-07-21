@@ -38,6 +38,8 @@ module.exports = app => {
     //---------------routes about comments--------------------------------------
     // LIST of all the comments in the DB 
     app.get('/api/comment/', comment.index); // ***works*** 
+    // route that get a Single Comment
+    app.delete('/api/comment/:commentId/', comment.find); // ***works***
     // route that CREATES a comment
     app.post('/api/comment/:postId/', comment.create); // ***works***
     // route that DELETES a comment

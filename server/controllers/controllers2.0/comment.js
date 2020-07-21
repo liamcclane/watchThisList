@@ -8,6 +8,11 @@ module.exports = {
             .catch(err => res.json(err))
             .then(data => res.json(data))
     },
+    find: (req, res) => {
+        Comment.findOne({ _id: req.params.commentId })
+            .catch(err => res.json(err))
+            .then(data => res.json(data))
+    },
     create: (req, res) => {
         let com = new Comment(req.body);
         Post.findById({ _id: req.params.postId })
